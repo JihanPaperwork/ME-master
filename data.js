@@ -3,12 +3,12 @@
 // Hapus deklarasi nextId di sini. Kita akan menentukannya secara dinamis.
 
 let about_me = [
-  { id: 1, name: 'Jihan Humaira', title: 'Mahasiswa Informatika', description: 'Seorang mahasiswa yang bersemangat dalam pengembangan web dan data science.', profile_pic_url: 'https://res.cloudinary.com/ds0jhgiee/image/upload/v1752217373/WhatsApp_Image_2025-07-10_at_20.39.55_qvj4pk.jpg' }
+  { id: 1, name: 'Jihan Humaira', title: 'Mahasiswa Informatika Universitas Amikom', description: 'Seorang mahasiswa yang bersemangat dalam pengembangan web dan data science.', profile_pic_url: 'https://res.cloudinary.com/ds0jhgiee/image/upload/v1752217373/WhatsApp_Image_2025-07-10_at_20.39.55_qvj4pk.jpg' }
 ];
 
 let education = [
   { id: 1, institution: 'Universitas AMIKOM Yogyakarta', degree: 'S1 Informatika', years: '2022 - Sekarang' },
-  { id: 2, institution: 'SMA Negeri 1 Contoh', degree: 'IPA', years: '2019 - 2022' }
+  { id: 2, institution: 'SMK IT RR Rejang Lebong', degree: 'IPA', years: '2019 - 2022' }
 ];
 
 let skill_categories = [
@@ -27,8 +27,7 @@ let skills = [
 ];
 
 let experiences = [
-  { id: 1, title: 'Asisten Laboratorium Pemrograman Web', company: 'Universitas AMIKOM Yogyakarta', duration: '2023 - Sekarang', description: 'Membantu mahasiswa dalam praktikum pemrograman web.' },
-  { id: 2, title: 'Web Developer Intern', company: 'PT. Teknologi Maju', duration: 'Juni - Agustus 2024', description: 'Mengembangkan dan memelihara fitur-fitur website perusahaan.' }
+  { id: 1, title: 'Gamelab Apprenticeship', company: 'Gamelab', duration: 'Juni - Agustus 2024', description: 'Belajar Web Development.' }
 ];
 
 let projects = [
@@ -37,8 +36,8 @@ let projects = [
 ];
 
 let contact_info = [
-  { id: 1, type: 'Email', value: 'jihan.humaira@example.com', url: 'mailto:jihan.humaira@example.com' },
-  { id: 2, type: 'LinkedIn', value: 'jihan-humaira', url: 'https://www.linkedin.com/in/jihan-humaira' }
+  { id: 1, type: 'Email', value: 'jihanjihan05hum@gmail.com', url: 'mailto:jihanjihan05hum@gmail.com' },
+  { id: 2, type: 'LinkedIn', value: 'jihan-humaira', url: 'https://www.linkedin.com/in/jihan-humaira-2b4491261/' }
 ];
 
 // dashboard_info akan diinisialisasi dan diperbarui di server.js

@@ -3,7 +3,7 @@
 // Hapus deklarasi nextId di sini. Kita akan menentukannya secara dinamis.
 
 let about_me = [
-  { id: 1, name: 'Jihan Humaira', title: 'Mahasiswa Informatika', description: 'Seorang mahasiswa yang bersemangat dalam pengembangan web dan data science.', profile_pic_url: 'https://via.placeholder.com/180' }
+  { id: 1, name: 'Jihan Humaira', title: 'Mahasiswa Informatika', description: 'Seorang mahasiswa yang bersemangat dalam pengembangan web dan data science.', profile_pic_url: 'https://res.cloudinary.com/ds0jhgiee/image/upload/v1752217373/WhatsApp_Image_2025-07-10_at_20.39.55_qvj4pk.jpg' }
 ];
 
 let education = [

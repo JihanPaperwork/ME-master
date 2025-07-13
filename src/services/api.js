@@ -1,5 +1,9 @@
 // src/services/api.js
-const API_BASE_URL = 'http://localhost:3000/api';
+// API_BASE_URL akan beralih antara localhost (dev) dan path relatif /api (prod)
+const API_BASE_URL = import.meta.env.PROD
+  ? '/api' // Di produksi (Vercel), API akan diakses melalui path /api
+  : 'http://localhost:3000/api'; // Di lokal, akses ke localhost:3000
+
 import { getAuthToken, clearAuth } from '../utils/auth.js';
 
 const fetchWrapper = async (endpoint, options = {}) => {

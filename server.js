@@ -17,15 +17,8 @@ import {
   projects,
   contact_info,
   dashboard_info,
-  users, // Gunakan users dari data.js untuk simulasi login
-  nextAboutMeId,
-  nextEducationId,
-  nextSkillCategoryId,
-  nextSkillId,
-  nextExperienceId,
-  nextProjectId,
-  nextContactInfoId,
-  nextDashboardInfoId
+  users,
+  getNextId // Import fungsi getNextId
 } from './data.js';
 
 // Load environment variables (masih dibutuhkan untuk JWT_SECRET)
@@ -51,16 +44,13 @@ app.post('/api/auth/login', async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    // Cari user di array users in-memory
     const user = users.find(u => u.username.toLowerCase() === username.toLowerCase());
 
     if (!user) {
       return res.status(400).json({ msg: 'Invalid Credentials - User not found' });
     }
 
-    // Bandingkan password (simulasi, karena kita tidak menyimpan hash sebenarnya di data.js)
-    // Dalam implementasi nyata, Anda akan menggunakan bcrypt.compare(password, user.password_hash);
-    const isMatch = (password === user.password); // Mengganti bcrypt.compare dengan perbandingan langsung untuk demo JSON
+    const isMatch = (password === user.password);
 
     if (!isMatch) {
       return res.status(400).json({ msg: 'Invalid Credentials - Password mismatch' });
@@ -75,7 +65,7 @@ app.post('/api/auth/login', async (req, res) => {
 
     jwt.sign(
       payload,
-      process.env.JWT_SECRET || 'your_jwt_secret_key', // Gunakan secret dari .env atau fallback
+      process.env.JWT_SECRET || 'your_jwt_secret_key',
       { expiresIn: '1h' },
       (err, token) => {
         if (err) throw err;
@@ -94,12 +84,12 @@ app.post('/api/auth/login', async (req, res) => {
 app.get('/api/dashboard', authMiddleware, async (req, res) => {
   try {
     // Perbarui nilai dashboard_info secara dinamis
-    dashboard_info[0].value = education.length; // Total Education Entries
-    dashboard_info[1].value = skill_categories.length; // Total Skill Categories
-    dashboard_info[2].value = skills.length; // Total Skills
-    dashboard_info[3].value = experiences.length; // Total Experience Entries
-    dashboard_info[4].value = projects.length; // Total Project Entries
-    dashboard_info[5].value = contact_info.length; // Total Contact Entries
+    dashboard_info[0].value = education.length;
+    dashboard_info[1].value = skill_categories.length;
+    dashboard_info[2].value = skills.length;
+    dashboard_info[3].value = experiences.length;
+    dashboard_info[4].value = projects.length;
+    dashboard_info[5].value = contact_info.length;
 
     res.json(dashboard_info);
   } catch (err) {
@@ -112,7 +102,7 @@ app.get('/api/dashboard', authMiddleware, async (req, res) => {
 app.get('/api/about', async (req, res) => {
   try {
     if (about_me.length > 0) {
-      res.json(about_me[0]); // Asumsi hanya ada satu entri About Me
+      res.json(about_me[0]);
     } else {
       res.status(404).json({ message: 'About Me data not found' });
     }
@@ -128,13 +118,11 @@ app.post('/api/about', authMiddleware, async (req, res) => {
     return res.status(400).json({ msg: 'Name and title are required for About Me.' });
   }
   try {
-    // Untuk About Me, kita biasanya hanya UPDATE satu entri. Jika belum ada, kita bisa membuatnya.
     if (about_me.length === 0) {
-      const newEntry = { id: nextAboutMeId++, name, title, description, profile_pic_url };
+      const newEntry = { id: getNextId(about_me), name, title, description, profile_pic_url }; // Gunakan getNextId
       about_me.push(newEntry);
       res.status(201).json(newEntry);
     } else {
-      // Jika sudah ada, kita anggap ini adalah update
       const existingEntry = about_me[0];
       existingEntry.name = name;
       existingEntry.title = title;
@@ -171,13 +159,11 @@ app.put('/api/about/:id', authMiddleware, async (req, res) => {
 // EDUCATION CRUD (In-memory)
 app.get('/api/education', async (req, res) => {
   try {
-    // Pastikan education adalah let agar bisa diubah
-    let currentEducation = [...education]; // Buat salinan untuk sorting
+    let currentEducation = [...education];
     res.json(currentEducation.sort((a, b) => {
-        // Mengasumsikan 'years' adalah string dalam format "YYYY - YYYY" atau "YYYY - Sekarang"
         const yearA = parseInt(a.years.split(' - ')[0]);
         const yearB = parseInt(b.years.split(' - ')[0]);
-        return yearB - yearA; // Urutkan dari tahun terbaru ke terlama
+        return yearB - yearA;
     }));
   } catch (err) {
     console.error('Error fetching education data:', err);
@@ -191,7 +177,7 @@ app.post('/api/education', authMiddleware, async (req, res) => {
     return res.status(400).json({ msg: 'All fields are required for Education.' });
   }
   try {
-    const newEntry = { id: nextEducationId++, institution, degree, years };
+    const newEntry = { id: getNextId(education), institution, degree, years }; // Gunakan getNextId
     education.push(newEntry);
     res.status(201).json(newEntry);
   } catch (err) {
@@ -225,10 +211,10 @@ app.delete('/api/education/:id', authMiddleware, async (req, res) => {
   try {
     const initialLength = education.length;
     let newEducation = education.filter(item => item.id != id);
-    if (newEducation.length === initialLength) { // Periksa panjang setelah filter
+    if (newEducation.length === initialLength) {
       return res.status(404).json({ msg: 'Education entry not found' });
     }
-    education.splice(0, education.length, ...newEducation); // Perbarui array global
+    education.splice(0, education.length, ...newEducation);
     res.json({ msg: 'Education entry deleted', id: parseInt(id) });
   } catch (err) {
     console.error('Error deleting education data:', err.message);
@@ -237,7 +223,7 @@ app.delete('/api/education/:id', authMiddleware, async (req, res) => {
 });
 
 // SKILL CATEGORIES & SKILLS CRUD (In-memory)
-app.get('/api/skills', async (req, res) => { // Reads all skills categorized for public display
+app.get('/api/skills', async (req, res) => {
   try {
     const skillsByCategory = skill_categories.reduce((acc, category) => {
       acc[category.name] = skills
@@ -266,7 +252,7 @@ app.post('/api/skill-categories', authMiddleware, async (req, res) => {
   const { name } = req.body;
   if (!name) return res.status(400).json({ msg: 'Category name is required.' });
   try {
-    const newEntry = { id: nextSkillCategoryId++, name };
+    const newEntry = { id: getNextId(skill_categories), name }; // Gunakan getNextId
     skill_categories.push(newEntry);
     res.status(201).json(newEntry);
   } catch (err) {
@@ -298,11 +284,10 @@ app.delete('/api/skill-categories/:id', authMiddleware, async (req, res) => {
     if (newSkillCategories.length === initialLength) {
       return res.status(404).json({ msg: 'Category not found.' });
     }
-    skill_categories.splice(0, skill_categories.length, ...newSkillCategories); // Perbarui array global
+    skill_categories.splice(0, skill_categories.length, ...newSkillCategories);
 
-    // Juga hapus skill yang terkait dengan kategori ini
     let newSkills = skills.filter(skill => skill.category_id != id);
-    skills.splice(0, skills.length, ...newSkills); // Perbarui array global skills
+    skills.splice(0, skills.length, ...newSkills);
 
     res.json({ msg: 'Category deleted', id: parseInt(id) });
   } catch (err) {
@@ -312,7 +297,7 @@ app.delete('/api/skill-categories/:id', authMiddleware, async (req, res) => {
 });
 
 // Manage Individual Skills (In-memory)
-app.get('/api/individual-skills', authMiddleware, async (req, res) => { // Get all skills with category name
+app.get('/api/individual-skills', authMiddleware, async (req, res) => {
   try {
     const result = skills.map(skill => {
       const category = skill_categories.find(cat => cat.id === skill.category_id);
@@ -334,7 +319,7 @@ app.post('/api/individual-skills', authMiddleware, async (req, res) => {
   const { name, category_id } = req.body;
   if (!name || !category_id) return res.status(400).json({ msg: 'Skill name and category ID are required.' });
   try {
-    const newEntry = { id: nextSkillId++, name, category_id: parseInt(category_id) };
+    const newEntry = { id: getNextId(skills), name, category_id: parseInt(category_id) }; // Gunakan getNextId
     skills.push(newEntry);
     res.status(201).json(newEntry);
   } catch (err) {
@@ -366,7 +351,7 @@ app.delete('/api/individual-skills/:id', authMiddleware, async (req, res) => {
     if (newSkills.length === initialLength) {
       return res.status(404).json({ msg: 'Skill not found.' });
     }
-    skills.splice(0, skills.length, ...newSkills); // Perbarui array global
+    skills.splice(0, skills.length, ...newSkills);
     res.json({ msg: 'Skill deleted', id: parseInt(id) });
   } catch (err) {
     console.error('Error deleting individual skill:', err.message);
@@ -392,7 +377,7 @@ app.post('/api/experience', authMiddleware, async (req, res) => {
     return res.status(400).json({ msg: 'All fields are required for Experience.' });
   }
   try {
-    const newEntry = { id: nextExperienceId++, title, company, duration, description };
+    const newEntry = { id: getNextId(experiences), title, company, duration, description }; // Gunakan getNextId
     experiences.push(newEntry);
     res.status(201).json(newEntry);
   } catch (err) {
@@ -428,7 +413,7 @@ app.delete('/api/experience/:id', authMiddleware, async (req, res) => {
     if (newExperiences.length === initialLength) {
       return res.status(404).json({ msg: 'Experience entry not found' });
     }
-    experiences.splice(0, experiences.length, ...newExperiences); // Perbarui array global
+    experiences.splice(0, experiences.length, ...newExperiences);
     res.json({ msg: 'Experience entry deleted', id: parseInt(id) });
   } catch (err) {
     console.error('Error deleting experience data:', err.message);
@@ -454,7 +439,7 @@ app.post('/api/projects', authMiddleware, async (req, res) => {
     return res.status(400).json({ msg: 'All fields are required for Project.' });
   }
   try {
-    const newEntry = { id: nextProjectId++, title, description, technologies };
+    const newEntry = { id: getNextId(projects), title, description, technologies }; // Gunakan getNextId
     projects.push(newEntry);
     res.status(201).json(newEntry);
   } catch (err) {
@@ -490,7 +475,7 @@ app.delete('/api/projects/:id', authMiddleware, async (req, res) => {
     if (newProjects.length === initialLength) {
       return res.status(404).json({ msg: 'Project not found' });
     }
-    projects.splice(0, projects.length, ...newProjects); // Perbarui array global
+    projects.splice(0, projects.length, ...newProjects);
     res.json({ msg: 'Project deleted', id: parseInt(id) });
   } catch (err) {
     console.error('Error deleting project data:', err.message);
@@ -516,7 +501,7 @@ app.post('/api/contact', authMiddleware, async (req, res) => {
     return res.status(400).json({ msg: 'Type and value are required for Contact Info.' });
   }
   try {
-    const newEntry = { id: nextContactInfoId++, type, value, url };
+    const newEntry = { id: getNextId(contact_info), type, value, url };
     contact_info.push(newEntry);
     res.status(201).json(newEntry);
   } catch (err) {
@@ -552,7 +537,7 @@ app.delete('/api/contact/:id', authMiddleware, async (req, res) => {
     if (newContactInfo.length === initialLength) {
       return res.status(404).json({ msg: 'Contact info entry not found' });
     }
-    contact_info.splice(0, contact_info.length, ...newContactInfo); // Perbarui array global
+    contact_info.splice(0, contact_info.length, ...newContactInfo);
     res.json({ msg: 'Contact info entry deleted', id: parseInt(id) });
   } catch (err) {
     console.error('Error deleting contact info:', err.message);

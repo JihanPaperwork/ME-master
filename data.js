@@ -1,67 +1,67 @@
 // ME-master/data.js
 
-let nextAboutMeId = 1;
-let nextEducationId = 1;
-let nextSkillCategoryId = 1;
-let nextSkillId = 1;
-let nextExperienceId = 1;
-let nextProjectId = 1;
-let nextContactInfoId = 1;
-let nextDashboardInfoId = 1;
+// Hapus deklarasi nextId di sini. Kita akan menentukannya secara dinamis.
 
-const about_me = [
-  { id: nextAboutMeId++, name: 'Jihan Humaira', title: 'Mahasiswa Informatika', description: 'Seorang mahasiswa yang bersemangat dalam pengembangan web dan data science.', profile_pic_url: 'https://res.cloudinary.com/ds0jhgiee/image/upload/v1752217373/WhatsApp_Image_2025-07-10_at_20.39.55_qvj4pk.jpg' }
+let about_me = [
+  { id: 1, name: 'Jihan Humaira', title: 'Mahasiswa Informatika', description: 'Seorang mahasiswa yang bersemangat dalam pengembangan web dan data science.', profile_pic_url: 'https://via.placeholder.com/180' }
 ];
 
-const education = [
-  { id: nextEducationId++, institution: 'Universitas AMIKOM Yogyakarta', degree: 'S1 Informatika', years: '2022 - Sekarang' },
-  { id: nextEducationId++, institution: 'SMA Negeri 1 Contoh', degree: 'IPA', years: '2019 - 2022' }
+let education = [
+  { id: 1, institution: 'Universitas AMIKOM Yogyakarta', degree: 'S1 Informatika', years: '2022 - Sekarang' },
+  { id: 2, institution: 'SMA Negeri 1 Contoh', degree: 'IPA', years: '2019 - 2022' }
 ];
 
-const skill_categories = [
-  { id: nextSkillCategoryId++, name: 'Programming Languages' },
-  { id: nextSkillCategoryId++, name: 'Web Development' },
-  { id: nextSkillCategoryId++, name: 'Databases' }
+let skill_categories = [
+  { id: 1, name: 'Programming Languages' },
+  { id: 2, name: 'Web Development' },
+  { id: 3, name: 'Databases' }
 ];
 
-const skills = [
-  { id: nextSkillId++, name: 'JavaScript', category_id: 1 },
-  { id: nextSkillId++, name: 'Python', category_id: 1 },
-  { id: nextSkillId++, name: 'Vue.js', category_id: 2 },
-  { id: nextSkillId++, name: 'Node.js', category_id: 2 },
-  { id: nextSkillId++, name: 'Express.js', category_id: 2 },
-  { id: nextSkillId++, name: 'PostgreSQL', category_id: 3 }
+let skills = [
+  { id: 1, name: 'JavaScript', category_id: 1 },
+  { id: 2, name: 'Python', category_id: 1 },
+  { id: 3, name: 'Vue.js', category_id: 2 },
+  { id: 4, name: 'Node.js', category_id: 2 },
+  { id: 5, name: 'Express.js', category_id: 2 },
+  { id: 6, name: 'PostgreSQL', category_id: 3 }
 ];
 
-const experiences = [
-  { id: nextExperienceId++, title: 'Asisten Laboratorium Pemrograman Web', company: 'Universitas AMIKOM Yogyakarta', duration: '2023 - Sekarang', description: 'Membantu mahasiswa dalam praktikum pemrograman web.' },
-  { id: nextExperienceId++, title: 'Web Developer Intern', company: 'PT. Teknologi Maju', duration: 'Juni - Agustus 2024', description: 'Mengembangkan dan memelihara fitur-fitur website perusahaan.' }
+let experiences = [
+  { id: 1, title: 'Asisten Laboratorium Pemrograman Web', company: 'Universitas AMIKOM Yogyakarta', duration: '2023 - Sekarang', description: 'Membantu mahasiswa dalam praktikum pemrograman web.' },
+  { id: 2, title: 'Web Developer Intern', company: 'PT. Teknologi Maju', duration: 'Juni - Agustus 2024', description: 'Mengembangkan dan memelihara fitur-fitur website perusahaan.' }
 ];
 
-const projects = [
-  { id: nextProjectId++, title: 'Sistem Manajemen Perpustakaan', description: 'Aplikasi web untuk pengelolaan buku dan peminjaman.', technologies: 'Vue.js, Express.js, PostgreSQL' },
-  { id: nextProjectId++, title: 'Website Portofolio Pribadi', description: 'Website untuk menampilkan proyek dan pengalaman pribadi.', technologies: 'Vue.js, Tailwind CSS' }
+let projects = [
+  { id: 1, title: 'Sistem Manajemen Perpustakaan', description: 'Aplikasi web untuk pengelolaan buku dan peminjaman.', technologies: 'Vue.js, Express.js, PostgreSQL' },
+  { id: 2, title: 'Website Portofolio Pribadi', description: 'Website untuk menampilkan proyek dan pengalaman pribadi.', technologies: 'Vue.js, Tailwind CSS' }
 ];
 
-const contact_info = [
-  { id: nextContactInfoId++, type: 'Email', value: 'jihan.humaira@example.com', url: 'mailto:jihan.humaira@example.com' },
-  { id: nextContactInfoId++, type: 'LinkedIn', value: 'jihan-humaira', url: 'https://www.linkedin.com/in/jihan-humaira' }
+let contact_info = [
+  { id: 1, type: 'Email', value: 'jihan.humaira@example.com', url: 'mailto:jihan.humaira@example.com' },
+  { id: 2, type: 'LinkedIn', value: 'jihan-humaira', url: 'https://www.linkedin.com/in/jihan-humaira' }
 ];
 
-const dashboard_info = [
-    { id: nextDashboardInfoId++, title: 'Total Education Entries', value: education.length },
-    { id: nextDashboardInfoId++, title: 'Total Skill Categories', value: skill_categories.length },
-    { id: nextDashboardInfoId++, title: 'Total Skills', value: skills.length },
-    { id: nextDashboardInfoId++, title: 'Total Experience Entries', value: experiences.length },
-    { id: nextDashboardInfoId++, title: 'Total Project Entries', value: projects.length },
-    { id: nextDashboardInfoId++, title: 'Total Contact Entries', value: contact_info.length }
+// dashboard_info akan diinisialisasi dan diperbarui di server.js
+let dashboard_info = [
+    { id: 1, title: 'Total Education Entries', value: 0 },
+    { id: 2, title: 'Total Skill Categories', value: 0 },
+    { id: 3, title: 'Total Skills', value: 0 },
+    { id: 4, title: 'Total Experience Entries', value: 0 },
+    { id: 5, title: 'Total Project Entries', value: 0 },
+    { id: 6, title: 'Total Contact Entries', value: 0 }
 ];
 
-// Untuk keperluan login, kita akan menggunakan array users in-memory.
-// Dalam aplikasi nyata, ini harus disimpan dengan aman dan tidak hardcoded.
-const users = [
-  { id: 1, username: 'admin', password: 'password123', role: 'admin' } // CATATAN: Password ini hanya untuk DEMO. TIDAK AMAN UNTUK PRODUKSI.
+let users = [
+  { id: 1, username: 'admin', password: 'password123', role: 'admin' }
 ];
+
+// Fungsi untuk mendapatkan ID baru secara dinamis
+const getNextId = (array) => {
+  if (array.length === 0) {
+    return 1;
+  }
+  return Math.max(...array.map(item => item.id)) + 1;
+};
 
 export {
   about_me,
@@ -73,12 +73,5 @@ export {
   contact_info,
   dashboard_info,
   users,
-  nextAboutMeId,
-  nextEducationId,
-  nextSkillCategoryId,
-  nextSkillId,
-  nextExperienceId,
-  nextProjectId,
-  nextContactInfoId,
-  nextDashboardInfoId
+  getNextId // Export fungsi getNextId
 };

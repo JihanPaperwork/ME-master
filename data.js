@@ -8,7 +8,7 @@ let about_me = [
 
 let education = [
   { id: 1, institution: 'Universitas AMIKOM Yogyakarta', degree: 'S1 Informatika', years: '2022 - Sekarang' },
-  { id: 2, institution: 'SMK IT RR Rejang Lebong', degree: 'IPA', years: '2019 - 2022' }
+  { id: 2, institution: 'SMK IT RR Rejang Lebong', degree: 'RPL', years: '2019 - 2022' }
 ];
 
 let skill_categories = [
@@ -27,7 +27,7 @@ let skills = [
 ];
 
 let experiences = [
-  { id: 1, title: 'Gamelab Apprenticeship', company: 'Gamelab', duration: 'Juni - Agustus 2024', description: 'Belajar Web Development.' }
+  { id: 1, title: 'Apprenticeship', company: 'Gamelab', duration: 'Juni - Agustus 2024', description: 'Belajar Web Development.' }
 ];
 
 let projects = [

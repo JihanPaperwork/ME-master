@@ -51,7 +51,7 @@ let dashboard_info = [
 ];
 
 let users = [
-  { id: 1, username: 'admin', password: 'password123', role: 'admin' }
+  { id: 1, username: 'admin', password: 'JYiZYA2K987uklS', role: 'admin' }
 ];
 
 // Fungsi untuk mendapatkan ID baru secara dinamis
